@@ -97,6 +97,7 @@ function analyse(argv) {
   const nonUsed = filePathes
     .filter(({used, path: filePath2})=>!used && !ignoreFiles.some(ignoreFile=>filePath2.includes(ignoreFile)))
     .map(({path: filePath2})=>filePath2);
+  // eslint-disable-next-line no-console
   console.log(`\n\nNon used files (${nonUsed.length}):\n\n${nonUsed.join('\n')}`);
 }
 

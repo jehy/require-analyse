@@ -8,6 +8,7 @@
   "keywords": [],
   "main": "analyse.js",
   "scripts": {
+    "test": "",
     "lint": "eslint analyse.js",
     "check_coverage": "nyc check-coverage --lines 79 --functions 79 --branches 70",
     "coverage": "nyc npm test",
