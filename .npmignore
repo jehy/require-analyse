@@ -1,0 +1,10 @@
+package-lock.json
+coverage
+node_modules
+.travis.yml
+.idea
+test
+.eslintrc.json
+.eslintignore
+config/config.json
+.nyc_output

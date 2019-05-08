@@ -1,0 +1,49 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "script",
+    "ecmaFeatures": {
+      "jsx": false
+    }
+  },
+  "env": {
+    "browser": false,
+    "node": true,
+    "mocha": true
+  },
+  "extends": ["plugin:sonarjs/recommended", "airbnb-base"],
+  "plugins": [
+    "standard", "sonarjs"
+  ],
+  "rules": {
+    "sonarjs/cognitive-complexity": ["error", 30],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "test/**.js"
+        ]
+      }
+    ],
+    "no-mixed-operators": "off",
+    "max-len": ["error", 140],
+    "func-names": "off",
+    "strict": "error",
+    "prefer-destructuring": "warn",
+    "no-plusplus": "off",
+    "arrow-spacing": "off",
+    "object-curly-spacing": "off",
+    "prefer-const": "warn",
+    "object-shorthand": "warn",
+    "no-param-reassign": "warn",
+    "no-console": "error",
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "no-unused-vars": ["warn", {
+      "argsIgnorePattern": "unused",
+      "varsIgnorePattern": "unused"
+    }]
+  }
+}
