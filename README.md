@@ -36,5 +36,5 @@ Options:
 ```
 ### Sample
 ```
-npx require-analyse --node_path /web/avia/lib/nodejs/ --node_path /web/avia/src/ --path /web/avia --ignoreFileName mcore_modules  --ignoreFileName /bin/  --ignoreFileName /DAL/ --ignoreDir .git  --ignoreDir tests  --ignoreDir node_modules
+npx require-analyse analyse --node_path /web/avia/lib/nodejs/ --node_path /web/avia/src/ --path /web/avia --ignoreFileName mcore_modules  --ignoreFileName /bin/  --ignoreFileName /DAL/ --ignoreDir .git  --ignoreDir tests  --ignoreDir node_modules
 ```
