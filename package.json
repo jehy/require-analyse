@@ -1,16 +1,16 @@
 {
   "name": "require-analyse",
   "bin": {
-    "analyse": "analyse.js"
+    "analyse": "bin/analyse.js"
   },
-  "version": "0.0.2",
-  "description": "",
-  "keywords": [],
-  "main": "analyse.js",
+  "version": "0.1.0",
+  "description": "Analyse requires in node projects to detect dead code",
+  "keywords": ["require", "analyse"],
+  "main": "lib.js",
   "scripts": {
-    "test": "",
-    "lint": "eslint analyse.js",
-    "check_coverage": "nyc check-coverage --lines 79 --functions 79 --branches 70",
+    "test": "mocha --use_strict --exit",
+    "lint": "eslint .",
+    "check_coverage": "nyc check-coverage --lines 90 --functions 90 --branches 90",
     "coverage": "nyc npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "prepublishOnly": "npm test && npm run coverage && npm run check_coverage && npm run lint"

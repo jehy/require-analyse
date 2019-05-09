@@ -3,7 +3,6 @@
 'use strict';
 
 const fs = require('fs');
-const program = require('yargs');
 const path = require('path');
 const Debug = require('debug');
 const klawSync = require('klaw-sync');
@@ -29,7 +28,8 @@ function getFiles(projectPath, ignoreDirs) {
     return filePath.endsWith('.js');
   }
 
-  return klawSync(projectPath, { filter: filterFn });
+  const filesAndDirs = klawSync(projectPath, { filter: filterFn });
+  return filesAndDirs.filter(({stats})=>stats.isFile());
 }
 
 function getNodeModules(projectPath) {
@@ -58,23 +58,26 @@ function getPossiblePathes(required, filePath, nodePathes) {
       nodePathes.forEach(nodePath=>possiblePathes.push(path.join(nodePath, possibleName)));
     }
   });
+  const uniquePossiblePathes = possiblePathes.filter((filePath2, index, arr)=>arr.indexOf(filePath2) === index);
   if (!samplePathShown) {
     samplePathShown = true;
     debug(`\n\nSample path check for "${required}" from ${filePath}:`);
     debug('possibleNames', possibleNames);
     debug('possiblePathes', possiblePathes, '\n\n');
+    debug('uniquePossiblePathes', uniquePossiblePathes, '\n\n');
   }
-  return possiblePathes;
+  return uniquePossiblePathes;
 }
 
+// No sense to write tests here
+/* istanbul ignore next */
 function analyse(argv) {
   if (argv.debug) {
     Debug.enable('analyse:*');
   }
   debug('Args:', argv);
   const nodeModules = getNodeModules(argv.path);
-  const paths = getFiles(argv.path, argv.ignoreDir || []);
-  const filePathes = paths.filter(({stats})=>stats.isFile());
+  const filePathes = getFiles(argv.path, argv.ignoreDir || []);
   // debug(filePathes);
   const regexp = /require\(([^)]*)\)/gi;
   filePathes.forEach(({path: filePath})=>{
@@ -101,36 +104,9 @@ function analyse(argv) {
   console.log(`\n\nNon used files (${nonUsed.length}):\n\n${nonUsed.join('\n')}`);
 }
 
-// eslint-disable-next-line no-unused-expressions
-program.usage('Usage: $0 <command> [options]')
-  .command('analyse', 'analyse files', {}, analyse)
-  .example('$0 analyse --node_path src --node_path modules --path /web/test', 'analyse test project')
-  .option('files', {
-    type: 'array',
-    demandOption: false,
-    describe: 'overrided node paths',
-  })
-  .option('ignoreFileName', {
-    type: 'array',
-    demandOption: false,
-    describe: 'ignore files which name includes those substrings',
-  })
-  .option('ignoreDir', {
-    type: 'array',
-    demandOption: false,
-    describe: 'ignore dirs with exactly those names',
-  })
-  .option('path', {
-    type: 'string',
-    nargs: 1,
-    describe: 'project path',
-    demandOption: true,
-  })
-  .option('debug', {
-    type: 'boolean',
-    nargs: 1,
-    describe: 'show debug output',
-  })
-  .help('h')
-  .alias('h', 'help')
-  .argv;
+module.exports = {
+  analyse,
+  getPossiblePathes,
+  getFiles,
+  getNodeModules,
+};
