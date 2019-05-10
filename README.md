@@ -9,7 +9,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/jehy/require-analyse/badge.svg)](https://snyk.io/test/github/jehy/require-analyse)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/jehyrus)
 
-Simple analyse of requires to find unused code.
+Simple analyse of requires to find unused (dead) and most used code.
 
 ### Installation
 

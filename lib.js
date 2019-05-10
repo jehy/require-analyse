@@ -91,7 +91,11 @@ function analyse(argv) {
       possiblePathes.forEach((possiblePath)=>{
         const found = filePathes.find(({path: filePath2})=> filePath2 === possiblePath);
         if (found) {
-          found.used = true;
+          if (!found.used) {
+            found.used = 1;
+          } else {
+            found.used++;
+          }
         }
       });
     });
@@ -102,6 +106,15 @@ function analyse(argv) {
     .map(({path: filePath2})=>filePath2);
   // eslint-disable-next-line no-console
   console.log(`\n\nNon used files (${nonUsed.length}):\n\n${nonUsed.join('\n')}`);
+  const mostUsed = filePathes
+    .filter(({used, path: filePath2})=>used && !ignoreFiles.some(ignoreFile=>filePath2.includes(ignoreFile)))
+    .sort((a, b)=>b.used - a.used)
+    .map(el=>({used: el.used, path: el.path}))
+    .slice(0, 20);
+  // eslint-disable-next-line no-console
+  console.log('\n\nMost used files:');
+  // eslint-disable-next-line no-console
+  console.log(mostUsed.map(el=>`${el.path} ${el.used}`).join('\n'));
 }
 
 module.exports = {

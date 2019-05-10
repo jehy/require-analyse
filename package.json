@@ -3,9 +3,12 @@
   "bin": {
     "analyse": "bin/analyse.js"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Analyse requires in node projects to detect dead code",
-  "keywords": ["require", "analyse"],
+  "keywords": [
+    "require",
+    "analyse"
+  ],
   "main": "lib.js",
   "scripts": {
     "test": "mocha --use_strict --exit",
@@ -40,6 +43,6 @@
     "eslint-plugin-standard": "^4.0.0",
     "istanbul": "~0.4.5",
     "mocha": "^6.1.4",
-    "nyc": "^14.0.0"
+    "nyc": "^14.1.1"
   }
 }
