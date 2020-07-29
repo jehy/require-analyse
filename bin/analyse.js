@@ -2,7 +2,6 @@
 
 'use strict';
 
-
 const program = require('yargs');
 
 const {analyse} = require('../lib.js');
