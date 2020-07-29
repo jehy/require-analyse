@@ -7,7 +7,6 @@ const path = require('path');
 const Debug = require('debug');
 const klawSync = require('klaw-sync');
 
-
 const debug = Debug('analyse:bin');
 let samplePathShown = false;
 
@@ -52,7 +51,7 @@ function getPossiblePathes(required, filePath, nodePathes) {
     possibleNames.push(`${required}.js`);
   }
   const possiblePathes = [];
-  possibleNames.forEach((possibleName)=>{
+  possibleNames.forEach(possibleName=>{
     possiblePathes.push(path.join(filePath, '../', possibleName));
     if (nodePathes && nodePathes.length) {
       nodePathes.forEach(nodePath=>possiblePathes.push(path.join(nodePath, possibleName)));
@@ -82,13 +81,13 @@ function analyse(argv) {
   const regexp = /require\(([^)]*)\)/gi;
   filePathes.forEach(({path: filePath})=>{
     const data = fs.readFileSync(filePath, 'utf8');
-    (data.match(regexp) || []).forEach((req) => {
+    (data.match(regexp) || []).forEach(req => {
       const required = req.substr(9, req.length - 11);
       if (nodeModules.includes(required)) {
         return;
       }
       const possiblePathes = getPossiblePathes(required, filePath, argv.node_path);
-      possiblePathes.forEach((possiblePath)=>{
+      possiblePathes.forEach(possiblePath=>{
         const found = filePathes.find(({path: filePath2})=> filePath2 === possiblePath);
         if (found) {
           if (!found.used) {
